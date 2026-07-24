@@ -43,7 +43,7 @@ describe('ConsoleLogComponent', () => {
   it('should emit clearLogs when Clear button is clicked', () => {
     const emitSpy = vi.spyOn(component.clearLogs, 'emit');
     const buttons = fixture.nativeElement.querySelectorAll('button');
-    const clearBtn = Array.from(buttons).find((b: any) => b.textContent.includes('Clear')) as HTMLButtonElement;
+    const clearBtn = Array.from(buttons).find((b) => (b as HTMLElement).textContent?.includes('Clear')) as HTMLButtonElement;
     clearBtn.click();
     expect(emitSpy).toHaveBeenCalled();
   });
@@ -53,9 +53,13 @@ describe('ConsoleLogComponent', () => {
     fixture.detectChanges();
 
     vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:test');
-    vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {});
+    vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {
+      // Mock revokeObjectURL implementation
+    });
     const dummyLink = document.createElement('a');
-    vi.spyOn(dummyLink, 'click').mockImplementation(() => {});
+    vi.spyOn(dummyLink, 'click').mockImplementation(() => {
+      // Mock click implementation
+    });
     vi.spyOn(document, 'createElement').mockReturnValue(dummyLink);
 
     component.exportLog('txt');

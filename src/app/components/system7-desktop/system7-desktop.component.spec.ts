@@ -6,7 +6,7 @@ import { SoundEffectsService } from '../../services/sound-effects.service';
 describe('System7DesktopComponent', () => {
   let component: System7DesktopComponent;
   let fixture: ComponentFixture<System7DesktopComponent>;
-  let mockSoundService: any;
+  let mockSoundService: Record<string, unknown>;
 
   beforeEach(async () => {
     if (typeof localStorage !== 'undefined') {
@@ -108,7 +108,9 @@ describe('System7DesktopComponent', () => {
     });
 
     it('should empty trash with window alert notification', () => {
-      vi.spyOn(window, 'alert').mockImplementation(() => {});
+      vi.spyOn(window, 'alert').mockImplementation(() => {
+        // Mock alert implementation
+      });
       component.emptyTrash();
       expect(window.alert).toHaveBeenCalled();
     });
@@ -235,13 +237,15 @@ describe('System7DesktopComponent', () => {
         bottom: 100,
         x: 20,
         y: 20,
-        toJSON: () => {}
+        toJSON: () => ({ left: 20, top: 20 })
       });
 
       const mockMouseEvent = {
         clientX: 30,
         clientY: 30,
-        stopPropagation: () => {},
+        stopPropagation: () => {
+          // Mock stopPropagation implementation
+        },
         currentTarget: mockElement
       } as unknown as MouseEvent;
 

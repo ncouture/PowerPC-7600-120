@@ -7,8 +7,8 @@ import { BenchmarkService } from '../../services/benchmark.service';
 describe('MacWindowComponent', () => {
   let component: MacWindowComponent;
   let fixture: ComponentFixture<MacWindowComponent>;
-  let mockSoundService: any;
-  let mockBenchmarkService: any;
+  let mockSoundService: Record<string, unknown>;
+  let mockBenchmarkService: Record<string, unknown>;
 
   beforeEach(async () => {
     mockSoundService = {
@@ -93,7 +93,7 @@ describe('MacWindowComponent', () => {
     component.onMouseUp();
 
     const mockContainer = { offsetWidth: 800, offsetHeight: 600 };
-    component.windowContainer = { nativeElement: mockContainer } as any;
+    component.windowContainer = { nativeElement: mockContainer } as unknown as ElementRef<HTMLDivElement>;
 
     const resizeEvent = new MouseEvent('mousedown', { clientX: 200, clientY: 200 });
     vi.spyOn(resizeEvent, 'stopPropagation');

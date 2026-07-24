@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterOutlet } from '@angular/router';
 import { BootSequenceComponent } from './components/boot-sequence/boot-sequence.component';
 import { System7DesktopComponent } from './components/system7-desktop/system7-desktop.component';
@@ -7,7 +7,7 @@ import { System7DesktopComponent } from './components/system7-desktop/system7-de
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, BootSequenceComponent, System7DesktopComponent],
+  imports: [RouterOutlet, BootSequenceComponent, System7DesktopComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

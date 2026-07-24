@@ -1,4 +1,14 @@
-import { Component, HostListener, OnInit, Output, EventEmitter, ViewChild, ElementRef, signal } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnInit,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  signal,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConsoleLogComponent, LogEntry } from '../console-log/console-log.component';
 import { CardGeneratorComponent } from '../card-generator/card-generator.component';
@@ -21,119 +31,186 @@ import { BenchmarkService, BenchmarkResult } from '../../services/benchmark.serv
     RetroAlertModalComponent,
     BenchmarkModalComponent,
     AboutModalComponent,
-    BlueMeaniesModalComponent
+    BlueMeaniesModalComponent,
   ],
   template: `
-    <div (click)="closeDropdowns()" class="relative min-h-screen w-full flex flex-col items-center justify-center p-4">
-      
+    <div
+      (click)="closeDropdowns()"
+      class="relative min-h-screen w-full flex flex-col items-center justify-center p-4"
+    >
       <!-- Main Desktop Mac Window Container -->
-      <div #windowContainer
-           (click)="selectWindow()" 
-           [style.transform]="windowTransform()"
-           [style.width.px]="windowWidth()"
-           [style.height]="isZoomed() ? '90vh' : (windowHeight() ? windowHeight() + 'px' : 'auto')"
-           [ngClass]="{'border-black shadow-2xl z-30': isActive(), 'border-gray-500 opacity-95 z-20': !isActive()}"
-           class="mac-window relative overflow-hidden my-auto select-none transition-shadow duration-150">
-        
+      <div
+        #windowContainer
+        (click)="selectWindow()"
+        [style.transform]="windowTransform()"
+        [style.width.px]="windowWidth()"
+        [style.height]="isZoomed() ? '90vh' : windowHeight() ? windowHeight() + 'px' : 'auto'"
+        [ngClass]="{
+          'border-black shadow-2xl z-30': isActive(),
+          'border-gray-500 opacity-95 z-20': !isActive(),
+        }"
+        class="mac-window relative overflow-hidden my-auto select-none transition-shadow duration-150"
+      >
         <!-- CRT Scanline Overlay -->
         <div class="absolute inset-0 crt-scanlines z-50 pointer-events-none"></div>
 
         <!-- Mac OS Window Title Bar (Draggable & Double-Click Zoomable) -->
-        <div (mousedown)="startDrag($event)"
-             (dblclick)="toggleZoom()"
-             [ngClass]="{'mac-title-bar': isActive(), 'bg-gray-300 border-b-2 border-gray-600': !isActive()}"
-             class="px-3 py-1 flex items-center justify-between cursor-move select-none">
-          <div class="flex items-center space-x-2 bg-white px-2 py-0.5 border border-black pointer-events-none">
-            <div class="w-3 h-3 bg-black flex items-center justify-center text-white text-[8px] font-bold font-mono">⌘</div>
-            <span class="text-xs font-bold tracking-wider font-mono text-black">PowerPC_BitHacks_CC_Gen_v1.0.4.bin</span>
+        <div
+          (mousedown)="startDrag($event)"
+          (dblclick)="toggleZoom()"
+          [ngClass]="{
+            'mac-title-bar': isActive(),
+            'bg-gray-300 border-b-2 border-gray-600': !isActive(),
+          }"
+          class="px-3 py-1 flex items-center justify-between cursor-move select-none"
+        >
+          <div
+            class="flex items-center space-x-2 bg-white px-2 py-0.5 border border-black pointer-events-none"
+          >
+            <div
+              class="w-3 h-3 bg-black flex items-center justify-center text-white text-[8px] font-bold font-mono"
+            >
+              ⌘
+            </div>
+            <span class="text-xs font-bold tracking-wider font-mono text-black"
+              >PowerPC_BitHacks_CC_Gen_v1.0.4.bin</span
+            >
           </div>
           <div class="flex items-center space-x-1 z-10">
-            <div (click)="toggleZoom(); $event.stopPropagation()"
-                 title="Zoom / Tile Window" 
-                 class="w-4 h-4 bg-white border border-black flex items-center justify-center text-[10px] font-bold cursor-pointer hover:bg-gray-200 text-black">□</div>
-            <div (click)="closeWindowClick(); $event.stopPropagation()" 
-                 title="Close Window"
-                 class="w-4 h-4 bg-white border border-black flex items-center justify-center text-[10px] font-bold cursor-pointer hover:bg-red-300 text-black">×</div>
+            <div
+              (click)="toggleZoom(); $event.stopPropagation()"
+              title="Zoom / Tile Window"
+              class="w-4 h-4 bg-white border border-black flex items-center justify-center text-[10px] font-bold cursor-pointer hover:bg-gray-200 text-black"
+            >
+              □
+            </div>
+            <div
+              (click)="closeWindowClick(); $event.stopPropagation()"
+              title="Close Window"
+              class="w-4 h-4 bg-white border border-black flex items-center justify-center text-[10px] font-bold cursor-pointer hover:bg-red-300 text-black"
+            >
+              ×
+            </div>
           </div>
         </div>
 
         <!-- System 7 Interactive Drop-Down Menu Bar -->
-        <div class="bg-white border-b border-black px-3 py-0.5 flex space-x-4 text-xs font-bold text-black select-none relative z-40">
-          
+        <div
+          class="bg-white border-b border-black px-3 py-0.5 flex space-x-4 text-xs font-bold text-black select-none relative z-40"
+        >
           <!-- File Menu Item -->
-          <span (click)="triggerMenu('File'); $event.stopPropagation()" class="cursor-pointer hover:bg-black hover:text-white px-1 py-0.5">File</span>
-          
+          <span
+            (click)="triggerMenu('File'); $event.stopPropagation()"
+            class="cursor-pointer hover:bg-black hover:text-white px-1 py-0.5"
+            >File</span
+          >
+
           <!-- Edit Menu Item -->
-          <span (click)="triggerMenu('Edit'); $event.stopPropagation()" class="cursor-pointer hover:bg-black hover:text-white px-1 py-0.5">Edit</span>
-          
+          <span
+            (click)="triggerMenu('Edit'); $event.stopPropagation()"
+            class="cursor-pointer hover:bg-black hover:text-white px-1 py-0.5"
+            >Edit</span
+          >
+
           <!-- BitHacks Menu Item -->
-          <span (click)="generator.generate(); $event.stopPropagation()" class="cursor-pointer hover:bg-black hover:text-white px-1 py-0.5 flex items-center space-x-1">
+          <span
+            (click)="generator.generate(); $event.stopPropagation()"
+            class="cursor-pointer hover:bg-black hover:text-white px-1 py-0.5 flex items-center space-x-1"
+          >
             <span>BitHacks (Stanford)</span>
             <span class="text-[9px] font-mono text-gray-500 hover:text-white">(⌘G)</span>
           </span>
-          
+
           <!-- PowerPC AltiVec Menu Item -->
-          <span (click)="runBenchmark(); $event.stopPropagation()" class="cursor-pointer hover:bg-black hover:text-white px-1 py-0.5 flex items-center space-x-1">
+          <span
+            (click)="runBenchmark(); $event.stopPropagation()"
+            class="cursor-pointer hover:bg-black hover:text-white px-1 py-0.5 flex items-center space-x-1"
+          >
             <span>PowerPC AltiVec</span>
             <span class="text-[9px] font-mono text-gray-500 hover:text-white">(⌘B)</span>
           </span>
-          
+
           <!-- Special Drop-Down Menu Item -->
           <div class="relative">
-            <span (click)="toggleDropdown('special', $event)" 
-                  [ngClass]="{'bg-black text-white': activeDropdown() === 'special'}"
-                  class="cursor-pointer hover:bg-black hover:text-white px-1.5 py-0.5 flex items-center space-x-1">
+            <span
+              (click)="toggleDropdown('special', $event)"
+              [ngClass]="{ 'bg-black text-white': activeDropdown() === 'special' }"
+              class="cursor-pointer hover:bg-black hover:text-white px-1.5 py-0.5 flex items-center space-x-1"
+            >
               <span>Special</span>
               <span class="text-[8px]">▼</span>
             </span>
-            <div *ngIf="activeDropdown() === 'special'" 
-                 class="absolute left-0 top-full bg-white border-2 border-black shadow-[4px_4px_0px_#000] w-56 py-1 z-50 text-xs font-bold font-mono">
-              <div (click)="clearLogs(); $event.stopPropagation()" class="px-3 py-1.5 hover:bg-black hover:text-white cursor-pointer flex justify-between items-center">
-                <span>Clear Log Buffer</span>
-                <span class="text-[10px] font-mono text-gray-500 hover:text-white font-normal">(⌘+K)</span>
+            @if (activeDropdown() === 'special') {
+              <div
+                class="absolute left-0 top-full bg-white border-2 border-black shadow-[4px_4px_0px_#000] w-56 py-1 z-50 text-xs font-bold font-mono"
+              >
+                <div
+                  (click)="clearLogs(); $event.stopPropagation()"
+                  class="px-3 py-1.5 hover:bg-black hover:text-white cursor-pointer flex justify-between items-center"
+                >
+                  <span>Clear Log Buffer</span>
+                  <span class="text-[10px] font-mono text-gray-500 hover:text-white font-normal"
+                    >(⌘+K)</span
+                  >
+                </div>
               </div>
-            </div>
+            }
           </div>
-          
+
           <!-- Help Drop-Down Menu Item -->
           <div class="relative">
-            <span (click)="toggleDropdown('help', $event)" 
-                  [ngClass]="{'bg-black text-white': activeDropdown() === 'help'}"
-                  class="cursor-pointer hover:bg-black hover:text-white px-1.5 py-0.5 flex items-center space-x-1">
+            <span
+              (click)="toggleDropdown('help', $event)"
+              [ngClass]="{ 'bg-black text-white': activeDropdown() === 'help' }"
+              class="cursor-pointer hover:bg-black hover:text-white px-1.5 py-0.5 flex items-center space-x-1"
+            >
               <span>Help</span>
               <span class="text-[8px]">▼</span>
             </span>
-            <div *ngIf="activeDropdown() === 'help'" 
-                 class="absolute right-0 top-full bg-white border-2 border-black shadow-[4px_4px_0px_#000] w-52 py-1 z-50 text-xs font-bold font-mono">
-              <div (click)="openAboutModal(); $event.stopPropagation()" class="px-3 py-1.5 hover:bg-black hover:text-white cursor-pointer flex justify-between items-center border-b border-gray-200">
-                <span>About</span>
-                <span class="text-[10px] font-mono text-gray-500 hover:text-white font-normal">(⌘+I)</span>
+            @if (activeDropdown() === 'help') {
+              <div
+                class="absolute right-0 top-full bg-white border-2 border-black shadow-[4px_4px_0px_#000] w-52 py-1 z-50 text-xs font-bold font-mono"
+              >
+                <div
+                  (click)="openAboutModal(); $event.stopPropagation()"
+                  class="px-3 py-1.5 hover:bg-black hover:text-white cursor-pointer flex justify-between items-center border-b border-gray-200"
+                >
+                  <span>About</span>
+                  <span class="text-[10px] font-mono text-gray-500 hover:text-white font-normal"
+                    >(⌘+I)</span
+                  >
+                </div>
+                <div
+                  (click)="openAboutModal(); $event.stopPropagation()"
+                  class="px-3 py-1.5 hover:bg-black hover:text-white cursor-pointer flex justify-between items-center border-b border-gray-200"
+                >
+                  <span>Help</span>
+                  <span class="text-[10px] font-mono text-gray-500 hover:text-white font-normal"
+                    >(⌘+H)</span
+                  >
+                </div>
+                <div
+                  (click)="openBlueMeaniesModal(); $event.stopPropagation()"
+                  class="px-3 py-1.5 hover:bg-black hover:text-white cursor-pointer flex justify-between items-center text-blue-800"
+                >
+                  <span>🫐 Blue Meanies</span>
+                  <span class="text-[10px] font-mono text-gray-500 hover:text-white font-normal"
+                    >(⌘⌥⇧B)</span
+                  >
+                </div>
               </div>
-              <div (click)="openAboutModal(); $event.stopPropagation()" class="px-3 py-1.5 hover:bg-black hover:text-white cursor-pointer flex justify-between items-center border-b border-gray-200">
-                <span>Help</span>
-                <span class="text-[10px] font-mono text-gray-500 hover:text-white font-normal">(⌘+H)</span>
-              </div>
-              <div (click)="openBlueMeaniesModal(); $event.stopPropagation()" class="px-3 py-1.5 hover:bg-black hover:text-white cursor-pointer flex justify-between items-center text-blue-800">
-                <span>🫐 Blue Meanies</span>
-                <span class="text-[10px] font-mono text-gray-500 hover:text-white font-normal">(⌘⌥⇧B)</span>
-              </div>
-            </div>
+            }
           </div>
-
         </div>
 
         <!-- Main Application Workspace -->
         <div class="p-6 pinstripes">
-          <app-card-generator 
+          <app-card-generator
             #generator
             (logEvent)="addLog($event)"
-            (alertEvent)="showAlert($event)">
-            
-            <app-console-log 
-              [logs]="logs()" 
-              (clearLogs)="clearLogs()">
-            </app-console-log>
-
+            (alertEvent)="showAlert($event)"
+          >
+            <app-console-log [logs]="logs()" (clearLogs)="clearLogs()"> </app-console-log>
           </app-card-generator>
         </div>
 
@@ -141,46 +218,46 @@ import { BenchmarkService, BenchmarkResult } from '../../services/benchmark.serv
         <app-status-bar></app-status-bar>
 
         <!-- System 7 Bottom-Right Window Resize Handle -->
-        <div (mousedown)="startResize($event)"
-             title="Resize Window"
-             class="absolute bottom-0 right-0 w-4 h-4 bg-gray-200 border-t border-l border-black cursor-se-resize flex items-center justify-center text-[9px] font-bold text-black z-40 hover:bg-black hover:text-white">
+        <div
+          (mousedown)="startResize($event)"
+          title="Resize Window"
+          class="absolute bottom-0 right-0 w-4 h-4 bg-gray-200 border-t border-l border-black cursor-se-resize flex items-center justify-center text-[9px] font-bold text-black z-40 hover:bg-black hover:text-white"
+        >
           ◢
         </div>
-
       </div>
 
       <!-- Modals rendered outside mac-window to prevent transform clipping -->
-      
+
       <!-- Retro Alert Modal -->
       <app-retro-alert-modal
         [isOpen]="modalOpen()"
         [message]="modalMessage()"
-        (close)="modalOpen.set(false)">
+        (close)="modalOpen.set(false)"
+      >
       </app-retro-alert-modal>
 
       <!-- PowerPC Benchmark Modal -->
       <app-benchmark-modal
         [isOpen]="benchmarkOpen()"
         [result]="benchmarkResult()"
-        (close)="benchmarkOpen.set(false)">
+        (close)="benchmarkOpen.set(false)"
+      >
       </app-benchmark-modal>
 
       <!-- System 7 About & Help Modal -->
-      <app-about-modal
-        [isOpen]="aboutOpen()"
-        (close)="aboutOpen.set(false)">
-      </app-about-modal>
+      <app-about-modal [isOpen]="aboutOpen()" (close)="aboutOpen.set(false)"> </app-about-modal>
 
       <!-- System 7 Blue Meanies Engineering Credits Modal -->
-      <app-blue-meanies-modal
-        [isOpen]="blueMeaniesOpen()"
-        (close)="blueMeaniesOpen.set(false)">
+      <app-blue-meanies-modal [isOpen]="blueMeaniesOpen()" (close)="blueMeaniesOpen.set(false)">
       </app-blue-meanies-modal>
-
     </div>
-  `
+  `,
 })
 export class MacWindowComponent implements OnInit {
+  soundService = inject(SoundEffectsService);
+  private benchmarkService = inject(BenchmarkService);
+
   @Output() closeWindow = new EventEmitter<void>();
 
   logs = signal<LogEntry[]>([]);
@@ -197,7 +274,7 @@ export class MacWindowComponent implements OnInit {
   // Desktop Window Manager State
   isActive = signal<boolean>(true);
   isZoomed = signal<boolean>(false);
-  
+
   posX = signal<number>(0);
   posY = signal<number>(0);
   windowWidth = signal<number>(896); // Default 4xl = 896px
@@ -215,15 +292,10 @@ export class MacWindowComponent implements OnInit {
   @ViewChild('windowContainer') windowContainer!: ElementRef<HTMLDivElement>;
   @ViewChild('generator') generator!: CardGeneratorComponent;
 
-  constructor(
-    public soundService: SoundEffectsService,
-    private benchmarkService: BenchmarkService
-  ) {}
-
   ngOnInit(): void {
     this.addLog('[System boot] PowerPC G3 Open Firmware v2.4 initialized.');
     this.addLog('[Memory Check] 64MB RAM OK. L2 Cache: 512KB backside.');
-    this.addLog('[Bit-Hacks] Loaded Sean Anderson\'s SWAR routines from Stanford repository.');
+    this.addLog("[Bit-Hacks] Loaded Sean Anderson's SWAR routines from Stanford repository.");
     this.addLog('[Ready] Awaiting user command to compute valid Luhn permutations...');
     this.soundService.playStartupChime();
   }
@@ -307,7 +379,12 @@ export class MacWindowComponent implements OnInit {
       return;
     }
 
-    if ((event.metaKey || event.ctrlKey) && event.altKey && event.shiftKey && event.key.toLowerCase() === 'b') {
+    if (
+      (event.metaKey || event.ctrlKey) &&
+      event.altKey &&
+      event.shiftKey &&
+      event.key.toLowerCase() === 'b'
+    ) {
       event.preventDefault();
       this.openBlueMeaniesModal();
     } else if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'g') {
@@ -330,7 +407,8 @@ export class MacWindowComponent implements OnInit {
 
   private handleTabNavigation(event: KeyboardEvent): void {
     if (typeof document === 'undefined') return;
-    const focusableSelector = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const focusableSelector =
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
     const container = this.windowContainer.nativeElement;
     const focusables = Array.from(container.querySelectorAll<HTMLElement>(focusableSelector));
 
@@ -369,7 +447,7 @@ export class MacWindowComponent implements OnInit {
 
   addLog(message: string): void {
     const timestamp = new Date().toTimeString().split(' ')[0];
-    this.logs.update(current => [...current, { timestamp, message }]);
+    this.logs.update((current) => [...current, { timestamp, message }]);
 
     if (message.toLowerCase().includes('blue meanies') && !this.blueMeaniesOpen()) {
       this.openBlueMeaniesModal();
@@ -411,7 +489,9 @@ export class MacWindowComponent implements OnInit {
     this.benchmarkResult.set(result);
     this.benchmarkOpen.set(true);
     this.soundService.playSuccess();
-    this.addLog(`[Benchmark Completed] MFLOPS: ${result.mflops} | Bandwidth: ${result.memoryBandwidthMBps} MB/s | Speedup: ${result.speedupRatio}x`);
+    this.addLog(
+      `[Benchmark Completed] MFLOPS: ${result.mflops} | Bandwidth: ${result.memoryBandwidthMBps} MB/s | Speedup: ${result.speedupRatio}x`,
+    );
   }
 
   closeWindowClick(): void {

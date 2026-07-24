@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
 import { StatusBarComponent } from './status-bar.component';
 import { SoundEffectsService } from '../../services/sound-effects.service';
@@ -6,7 +6,7 @@ import { SoundEffectsService } from '../../services/sound-effects.service';
 describe('StatusBarComponent', () => {
   let component: StatusBarComponent;
   let fixture: ComponentFixture<StatusBarComponent>;
-  let mockSoundService: any;
+  let mockSoundService: Record<string, unknown>;
 
   beforeEach(async () => {
     mockSoundService = {

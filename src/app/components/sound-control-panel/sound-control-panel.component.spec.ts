@@ -6,7 +6,7 @@ import { SoundEffectsService } from '../../services/sound-effects.service';
 describe('SoundControlPanelComponent', () => {
   let component: SoundControlPanelComponent;
   let fixture: ComponentFixture<SoundControlPanelComponent>;
-  let mockSoundService: any;
+  let mockSoundService: Record<string, unknown>;
 
   beforeEach(async () => {
     mockSoundService = {

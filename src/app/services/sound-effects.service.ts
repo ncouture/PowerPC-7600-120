@@ -41,7 +41,9 @@ export class SoundEffectsService {
         if (config.soundTheme) this.soundTheme.set(config.soundTheme);
         if (config.dacResampling) this.dacResampling.set(config.dacResampling);
       }
-    } catch (e) {}
+    } catch {
+      // Ignore audio synthesis / localStorage errors
+    }
   }
 
   private saveConfig(): void {
@@ -54,7 +56,9 @@ export class SoundEffectsService {
         dacResampling: this.dacResampling()
       };
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(config));
-    } catch (e) {}
+    } catch {
+      // Ignore audio synthesis / localStorage errors
+    }
   }
 
   setVolume(newVal: number): void {
@@ -128,7 +132,9 @@ export class SoundEffectsService {
       gain.connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 0.03);
-    } catch (e) {}
+    } catch {
+      // Ignore audio synthesis / localStorage errors
+    }
   }
 
   /**
@@ -154,7 +160,9 @@ export class SoundEffectsService {
         osc.start(ctx.currentTime + idx * 0.05);
         osc.stop(ctx.currentTime + idx * 0.05 + 0.15);
       });
-    } catch (e) {}
+    } catch {
+      // Ignore audio synthesis / localStorage errors
+    }
   }
 
   /**
@@ -289,7 +297,9 @@ export class SoundEffectsService {
         osc.start();
         osc.stop(ctx.currentTime + 0.18);
       }
-    } catch (e) {}
+    } catch {
+      // Ignore audio synthesis / localStorage errors
+    }
   }
 
   /**
@@ -313,7 +323,9 @@ export class SoundEffectsService {
       gain.connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 0.04);
-    } catch (e) {}
+    } catch {
+      // Ignore audio synthesis / localStorage errors
+    }
   }
 
   /**
@@ -339,7 +351,9 @@ export class SoundEffectsService {
         osc.start();
         osc.stop(ctx.currentTime + 1.2);
       });
-    } catch (e) {}
+    } catch {
+      // Ignore audio synthesis / localStorage errors
+    }
   }
 
   /**
@@ -365,6 +379,8 @@ export class SoundEffectsService {
         osc.start(ctx.currentTime + idx * 0.08);
         osc.stop(ctx.currentTime + idx * 0.08 + 0.25);
       });
-    } catch (e) {}
+    } catch {
+      // Ignore audio synthesis / localStorage errors
+    }
   }
 }
