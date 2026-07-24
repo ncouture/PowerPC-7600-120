@@ -8,7 +8,12 @@ import { routes } from '../../app.routes';
 describe('BootSequenceComponent', () => {
   let component: BootSequenceComponent;
   let fixture: ComponentFixture<BootSequenceComponent>;
-  let mockSoundService: Record<string, unknown>;
+  let mockSoundService: {
+    playStartupChime: ReturnType<typeof vi.fn>;
+    playClick: ReturnType<typeof vi.fn>;
+    playSuccess: ReturnType<typeof vi.fn>;
+    playDiskSeek: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(async () => {
     mockSoundService = {

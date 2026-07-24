@@ -6,7 +6,17 @@ import { SoundEffectsService } from '../../services/sound-effects.service';
 describe('System7DesktopComponent', () => {
   let component: System7DesktopComponent;
   let fixture: ComponentFixture<System7DesktopComponent>;
-  let mockSoundService: Record<string, unknown>;
+  let mockSoundService: {
+    playClick: ReturnType<typeof vi.fn>;
+    playAlert: ReturnType<typeof vi.fn>;
+    playStartupChime: ReturnType<typeof vi.fn>;
+    toggleMute: ReturnType<typeof vi.fn>;
+    setVolume: ReturnType<typeof vi.fn>;
+    setSoundTheme: ReturnType<typeof vi.fn>;
+    isMuted: ReturnType<typeof vi.fn>;
+    macVolumeLevel: ReturnType<typeof vi.fn>;
+    soundTheme: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(async () => {
     if (typeof localStorage !== 'undefined') {

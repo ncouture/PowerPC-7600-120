@@ -6,7 +6,10 @@ import { SoundEffectsService } from '../../services/sound-effects.service';
 describe('StatusBarComponent', () => {
   let component: StatusBarComponent;
   let fixture: ComponentFixture<StatusBarComponent>;
-  let mockSoundService: Record<string, unknown>;
+  let mockSoundService: {
+    isMuted: ReturnType<typeof vi.fn>;
+    macVolumeLevel: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(async () => {
     mockSoundService = {

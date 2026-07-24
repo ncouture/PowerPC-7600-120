@@ -6,7 +6,20 @@ import { SoundEffectsService } from '../../services/sound-effects.service';
 describe('SoundControlPanelComponent', () => {
   let component: SoundControlPanelComponent;
   let fixture: ComponentFixture<SoundControlPanelComponent>;
-  let mockSoundService: Record<string, unknown>;
+  let mockSoundService: {
+    toggleMute: ReturnType<typeof vi.fn>;
+    setVolume: ReturnType<typeof vi.fn>;
+    setSoundTheme: ReturnType<typeof vi.fn>;
+    setDacResampling: ReturnType<typeof vi.fn>;
+    resetToDefaults: ReturnType<typeof vi.fn>;
+    playAlert: ReturnType<typeof vi.fn>;
+    playClick: ReturnType<typeof vi.fn>;
+    volume: ReturnType<typeof vi.fn>;
+    isMuted: ReturnType<typeof vi.fn>;
+    macVolumeLevel: ReturnType<typeof vi.fn>;
+    soundTheme: ReturnType<typeof vi.fn>;
+    dacResampling: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(async () => {
     mockSoundService = {
