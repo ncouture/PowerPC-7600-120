@@ -1,0 +1,3 @@
+<router-outlet></router-outlet>
+<app-boot-sequence *ngIf="isBooting()" (bootComplete)="onBootFinished()"></app-boot-sequence>
+<app-system7-desktop *ngIf="!isBooting()" (rebootSystemEvent)="reboot()"></app-system7-desktop>

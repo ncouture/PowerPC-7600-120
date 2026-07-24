@@ -1,0 +1,6 @@
+{
+  "apphosting": {
+    "backend": "credit-card-generator",
+    "rootDir": "."
+  }
+}

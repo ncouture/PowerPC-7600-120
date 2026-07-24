@@ -1,0 +1,121 @@
+<type>(<scope>): <summary>
+
+<Describe the motivation behind this change - explain WHY you are making this change. Wrap all lines
+at 100 characters.>
+
+Fixes #<issue number>
+
+# ────────────────────────────────────────── 100 chars ────────────────────────────────────────────┤
+
+
+# Example Commit Messages
+# =======================
+
+
+# ─── Example: Simple refactor ────────────────────────────────────────────────────────────────────┤
+# refactor(card-generator): rename generateCardDetails to generateCard
+#
+# Improve code readability. The original name was overly verbose and redundant with the class name.
+# ─────────────────────────────────────────────────────────────────────────────────────────────────┤
+
+
+# ─── Example: Simple docs change ─────────────────────────────────────────────────────────────────┤
+# docs: clarify setup instructions in README.md
+#
+# Fixes #12
+# ─────────────────────────────────────────────────────────────────────────────────────────────────┤
+
+
+# ─── Example: A bug fix ──────────────────────────────────────────────────────────────────────────┤
+# fix(boot-sequence): ensure progress bar reaches 100% before boot completes
+#
+# Previously, fast timing configurations caused the progress calculation to overflow before the
+# complete callback was registered.
+#
+# Now we sanitize timing bounds and guarantee clean completion triggers.
+# ─────────────────────────────────────────────────────────────────────────────────────────────────┤
+
+
+# ─── Example: A test enhancement ─────────────────────────────────────────────────────────────────┤
+# test(system7-desktop): add unit tests for localStorage layout restoration
+#
+# Adds coverage for window position restoration and invalid JSON fallback handling.
+# ─────────────────────────────────────────────────────────────────────────────────────────────────┤
+
+
+# ─── Example: Breaking change ────────────────────────────────────────────────────────────────────┤
+# feat(sound-effects): migrate WebAudio engine to modern AudioWorklet nodes
+#
+# Legacy ScriptProcessorNode is deprecated and causes audio stuttering under high UI render load.
+#
+# BREAKING CHANGE: sound-effects service constructor now requires AudioContext initialization options.
+#
+# Update instantiation calls to pass explicit AudioContextOptions configuration objects.
+#
+# Fixes #42
+# ─────────────────────────────────────────────────────────────────────────────────────────────────┤
+
+
+
+# Bit-Hack Commit Message Format
+# ==============================
+#
+# This repository follows the Conventional Commits specification modeled after Angular's guidelines.
+#
+# Each commit message consists of a *header*, a *body*, and a *footer*.
+#
+# <header>
+# <BLANK LINE>
+# <body>
+# <BLANK LINE>
+# <footer>
+#
+# The header is mandatory.
+#
+# The body is mandatory for all commits except for simple docs/test commits.
+# When required, explain WHY the change was made.
+#
+# The footer is optional.
+#
+# Lines in the commit message body should not exceed 100 characters.
+#
+#
+# Commit Message Header
+# ---------------------
+#
+# <type>(<scope>): <short summary>
+#   │       │             │
+#   │       │             └─⫸ Summary in imperative, present tense ("add", "fix", "change").
+#   │       │                Lower-case, no period at end.
+#   │       │
+#   │       └─⫸ Commit Scope (Examples):
+#   │             Components: card-generator | boot-sequence | system7-desktop | status-bar |
+#   │                         sound-control-panel | benchmark-modal | about-modal |
+#   │                         retro-alert-modal | mac-window | console-log
+#   │             Services:   sound-effects | card-generator-service
+#   │             Core/Other: app | core | deps | test | build | ci | docs
+#   │
+#   └─⫸ Commit Type: build | ci | docs | feat | fix | perf | refactor | style | test
+#
+#
+# Commit Message Body
+# -------------------
+#
+# Use imperative, present tense: "fix" not "fixed" nor "fixes".
+# Explain the motivation for the change. Explain WHY you are making the change and how it impacts
+# the application compared to previous behavior.
+#
+#
+# Commit Message Footer
+# ---------------------
+#
+# Breaking changes should start with "BREAKING CHANGE: " followed by a summary, blank line, and
+# migration instructions.
+#
+# ```
+# BREAKING CHANGE: <breaking change summary>
+# <BLANK LINE>
+# <breaking change description + migration instructions>
+# <BLANK LINE>
+# Fixes #<issue number>
+# ```
