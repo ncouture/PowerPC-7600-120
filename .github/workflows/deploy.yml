@@ -26,7 +26,7 @@ jobs:
         run: npm ci
 
       - name: Run unit test suite
-        run: npm test -- --watch=false
+        run: npm test -- --watch=false --coverage
 
       - name: Build Angular SSR application
         run: npm run build
