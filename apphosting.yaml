@@ -4,8 +4,8 @@ runConfig:
   maxInstances: 1
   concurrency: 80
   cpu: 1
-  memoryMiB: 128 
+  memoryMiB: 512
 
-env:
-  - variable: NODE_ENV
-    value: production
+# env:
+#   - variable: NODE_ENV
+#     value: production
