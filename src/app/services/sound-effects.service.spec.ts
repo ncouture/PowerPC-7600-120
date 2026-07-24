@@ -144,7 +144,7 @@ describe('SoundEffectsService', () => {
         createBiquadFilter: vi.fn().mockReturnValue(mockFilterNode),
       };
 
-      (window as any).AudioContext = vi.fn(function (this: any) {
+      (window as unknown as Record<string, unknown>)['AudioContext'] = vi.fn(function (this: unknown) {
         return mockAudioCtx;
       });
     });

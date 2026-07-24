@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { vi } from 'vitest';
 import { provideRouter } from '@angular/router';
 import { App } from './app';
 import { routes } from './app.routes';

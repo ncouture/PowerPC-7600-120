@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
-import { provideRouter, Router } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { BootSequenceComponent } from './boot-sequence.component';
 import { SoundEffectsService } from '../../services/sound-effects.service';
 import { routes } from '../../app.routes';
@@ -8,7 +8,7 @@ import { routes } from '../../app.routes';
 describe('BootSequenceComponent', () => {
   let component: BootSequenceComponent;
   let fixture: ComponentFixture<BootSequenceComponent>;
-  let mockSoundService: any;
+  let mockSoundService: Record<string, unknown>;
 
   beforeEach(async () => {
     mockSoundService = {

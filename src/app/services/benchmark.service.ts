@@ -19,7 +19,7 @@ export class BenchmarkService {
   /**
    * Run SWAR vs. Naive loop benchmark suite
    */
-  runBenchmarkSuite(iterations: number = 10000): BenchmarkResult {
+  runBenchmarkSuite(iterations = 10000): BenchmarkResult {
     const testData = new Uint32Array(iterations);
     let lfsr = 0xACE1;
 
@@ -61,6 +61,11 @@ export class BenchmarkService {
     const naiveOpsPerSec = Math.round((iterations / (naiveDurationMs / 1000)));
     const swarOpsPerSec = Math.round((iterations / (swarDurationMs / 1000)));
     const speedupRatio = parseFloat((swarOpsPerSec / Math.max(1, naiveOpsPerSec)).toFixed(2));
+
+    // Prevent unused variable optimization/lint errors while preserving calculation
+    if (naiveCount === -1 || swarCount === -1) {
+      console.log('Checksum:', naiveCount, swarCount);
+    }
 
     // Simulated PowerPC 604e @ 200 MHz MFLOPS & Bandwidth normalization
     const clockCyclesNormalized = iterations * 4; // 4 cycles per SWAR vector
