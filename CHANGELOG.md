@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.4](https://github.com/ncouture/credit-card-generator/compare/v0.0.3...v0.0.4) (2026-07-24)
+
+
+### Bug Fixes
+
+* ng build command not found, and liting step ([b96bca9](https://github.com/ncouture/credit-card-generator/commit/b96bca97df6032ed585c417179687c58c897eb24))
+
 ## [0.0.3](https://github.com/ncouture/credit-card-generator/compare/v0.0.2...v0.0.3) (2026-07-24)
 
 
