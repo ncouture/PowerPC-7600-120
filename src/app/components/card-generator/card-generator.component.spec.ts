@@ -8,8 +8,20 @@ import { Subject } from 'rxjs';
 describe('CardGeneratorComponent', () => {
   let component: CardGeneratorComponent;
   let fixture: ComponentFixture<CardGeneratorComponent>;
-  let mockBitHacks: Record<string, unknown>;
-  let mockSound: Record<string, unknown>;
+  let mockBitHacks: {
+    generationMode: ReturnType<typeof vi.fn>;
+    cardLength: ReturnType<typeof vi.fn>;
+    selectedIssuer: ReturnType<typeof vi.fn>;
+    cardHistory: ReturnType<typeof vi.fn>;
+    customBin: ReturnType<typeof vi.fn>;
+    generateSingleCard: ReturnType<typeof vi.fn>;
+    clearHistory: ReturnType<typeof vi.fn>;
+    streamCardBatch: ReturnType<typeof vi.fn>;
+  };
+  let mockSound: {
+    playClick: ReturnType<typeof vi.fn>;
+    playSuccess: ReturnType<typeof vi.fn>;
+  };
 
   const mockCard: CardResult = {
     cardNumber: '4111111111111111',
@@ -22,6 +34,13 @@ describe('CardGeneratorComponent', () => {
 
   beforeEach(async () => {
     mockBitHacks = {
+      generationMode: vi.fn().mockReturnValue('lfsr'),
+      cardLength: vi.fn().mockReturnValue(16),
+      selectedIssuer: vi.fn().mockReturnValue('visa'),
+      cardHistory: vi.fn().mockReturnValue([]),
+      customBin: vi.fn().mockReturnValue(''),
+      generateSingleCard: vi.fn(),
+      clearHistory: vi.fn(),
       streamCardBatch: vi.fn(),
     };
 

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ElementRef } from '@angular/core';
 import { vi } from 'vitest';
 import { MacWindowComponent } from './mac-window.component';
 import { SoundEffectsService } from '../../services/sound-effects.service';
@@ -7,8 +8,19 @@ import { BenchmarkService } from '../../services/benchmark.service';
 describe('MacWindowComponent', () => {
   let component: MacWindowComponent;
   let fixture: ComponentFixture<MacWindowComponent>;
-  let mockSoundService: Record<string, unknown>;
-  let mockBenchmarkService: Record<string, unknown>;
+  let mockSoundService: {
+    playStartupChime: ReturnType<typeof vi.fn>;
+    playClick: ReturnType<typeof vi.fn>;
+    playSuccess: ReturnType<typeof vi.fn>;
+    playAlert: ReturnType<typeof vi.fn>;
+    isMuted: ReturnType<typeof vi.fn>;
+    volume: ReturnType<typeof vi.fn>;
+    macVolumeLevel: ReturnType<typeof vi.fn>;
+    soundTheme: ReturnType<typeof vi.fn>;
+  };
+  let mockBenchmarkService: {
+    runBenchmarkSuite: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(async () => {
     mockSoundService = {
