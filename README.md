@@ -1,8 +1,8 @@
-# PowerPC 1996 Bit-Hacks Credit Card Utility (Angular SSR)
+# PowerPC 1996 Bit-Hacks Credit Card Generator Utility (Angular SSR)
 
-A moderately bad retro computing web application experiment and hardware simulation desktop environment built to recreate a memory running my first internet connected computer running System 7 desktop on my old simulated PowerPC 7600/120 hardware, built to last, armed with a laser printer, and a drawing pad, I used it mostly to download pictures I'd print and stick in my high school agenda or on top of my textbooks. 
+A moderately bad retro computing web application built for fun in an attempt to recreate a memory running my first internet connected computer, on Macintosh System 7 on PowerPC 7600/120 in 1996/1997.
 
-Built with **Angular v20+ Standalone Components** for fun, **Server-Side Rendering (`@angular/ssr`)** because I could, and a slick **Server-Sent Events (SSE)** pipe, **Tailwind CSS v4**, and running on the smallest scale **Firebase App Hosting** vm scaling down to zero.
+Built with **Angular v22+ Standalone Components**, and **Server-Side Rendering (`@angular/ssr`)** for fun, **Server-Sent Events (SSE)** to fool around angular signals, **Tailwind CSS v4**, and **Firebase App Hosting**.
 
 ---
 
@@ -46,7 +46,7 @@ Built with **Angular v20+ Standalone Components** for fun, **Server-Side Renderi
 ```bash
 # Clone the repository
 git clone git@github.com:ncouture/credit-card-generator.git 
-cd bit-hack
+cd credit-card-generator
 
 # Install dependencies
 npm install
@@ -79,6 +79,6 @@ The Node.js Express SSR server will listen on `http://localhost:4000/`.
 Run test suite:
 
 ```bash
-npm test -- --watch=false
+npm test -- --watch=false --coverage
 ```
 
