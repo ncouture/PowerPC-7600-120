@@ -8,6 +8,13 @@ indent_size = 2
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+[*.js]
+charset = utf-8
+ident_style = space
+ident_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
 [*.ts]
 quote_type = single
 ij_typescript_use_double_quotes = false

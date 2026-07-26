@@ -2,5 +2,16 @@
   "apphosting": {
     "backend": "credit-card-generator",
     "rootDir": "."
+  },
+  "hosting": {  // 🔗 https://bit-hack.web.app 
+    "rewrites": [
+      {
+        "source": "**",
+        "run": {
+          "serviceId": "credit-card-generator--bit-hack-ssr",
+          "region": "us-east4"
+        }
+      }
+    ]
   }
 }
