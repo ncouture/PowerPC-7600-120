@@ -1,9 +1,22 @@
 {
-  "apphosting": {
-    "backend": "credit-card-generator",
-    "rootDir": "."
-  },
-  "hosting": {  // 🔗 https://bit-hack.web.app 
+  "apphosting": [
+    // {
+    //   "backend": "credit-card-generator",
+    //   "rootDir": "."
+    // },
+    {
+      "backendId": "credit-card-generator",
+      "rootDir": ".",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "functions"
+      ]
+    }
+  ],
+  "hosting": {
     "rewrites": [
       {
         "source": "**",
