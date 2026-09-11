@@ -2,7 +2,7 @@
   "name": "credit-card-generator",
   "version": "0.0.5",
   "engines": {
-    "node": "24.x.x"
+    "node": ">=22"
   },
   "scripts": {
     "start": "ng serve",
@@ -39,7 +39,7 @@
     "angular-eslint": "22.1.0",
     "eslint": "^10.6.0",
     "jsdom": "^28.0.0",
-    "postcss": "^8.5.3",
+    "postcss": "^8.5.26",
     "prettier": "^3.8.1",
     "tailwindcss": "^4.1.12",
     "typescript": "~6.0.2",

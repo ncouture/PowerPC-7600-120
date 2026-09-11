@@ -38,7 +38,7 @@ Built with **Angular v22+ Standalone Components**, and **Server-Side Rendering (
 
 ### Prerequisites
 
-- Node.js v20+ or v24+
+- Node.js v22+
 - npm v10+
 
 ### Installation
