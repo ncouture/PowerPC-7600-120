@@ -2,7 +2,7 @@
   "name": "credit-card-generator",
   "version": "0.0.4",
   "engines": {
-    "node": "24.x.x"
+    "node": ">=22"
   },
   "scripts": {
     "start": "ng serve",
